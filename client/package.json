@@ -26,6 +26,7 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
+    "dev": "npx nodemon index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
