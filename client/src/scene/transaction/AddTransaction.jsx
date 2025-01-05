@@ -37,13 +37,17 @@ const AddTransaction = () => {
     const currentDate = formatDate();
 
     axios
-      .post("http://localhost:5000/transaction/create-transaction", {
-        expenseName,
-        email: user?.email,
-        amount,
-        category,
-        date: currentDate,
-      })
+      .post(
+        "https://mern-expense-tracker-cqy0.onrender.com/transaction/create-transaction",
+        {
+          // .post("http://localhost:5000/transaction/create-transaction", {
+          expenseName,
+          email: user?.email,
+          amount,
+          category,
+          date: currentDate,
+        }
+      )
       .then(nav("/dashboard"))
       .catch((err) => console.log("error"));
   };
@@ -53,13 +57,17 @@ const AddTransaction = () => {
 
     const currentDate = formatDate();
     axios
-      .post("http://localhost:5000/transaction/create-transaction", {
-        expenseName,
-        email: user?.email,
-        amount,
-        category,
-        date: currentDate,
-      })
+      .post(
+        "https://mern-expense-tracker-cqy0.onrender.com/transaction/create-transaction",
+        {
+          // .post("http://localhost:5000/transaction/create-transaction", {
+          expenseName,
+          email: user?.email,
+          amount,
+          category,
+          date: currentDate,
+        }
+      )
       .then(() => {
         getTransaction();
         setExpenseName("");

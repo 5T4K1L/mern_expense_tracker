@@ -9,7 +9,8 @@ const useSalary = () => {
     if (user) {
       try {
         const response = await axios.get(
-          `http://localhost:5000/salary/get-salary?email=${user.email}`
+          `https://mern-expense-tracker-cqy0.onrender.com/salary/get-salary?email=${user.email}`
+          // `http://localhost:5000/salary/get-salary?email=${user.email}`
         );
         setSalary(response.data.salary);
       } catch (error) {

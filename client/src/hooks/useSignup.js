@@ -14,11 +14,15 @@ export const useSignup = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:5000/user/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
+    const response = await fetch(
+      "https://mern-expense-tracker-cqy0.onrender.com/user/signup",
+      {
+        // const response = await fetch("http://localhost:5000/user/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      }
+    );
 
     const json = await response.json();
 
@@ -27,10 +31,14 @@ export const useSignup = () => {
       setError(json.error);
     }
     if (response.ok) {
-      axios.post(`http://localhost:5000/salary/set-salary`, {
-        salary,
-        email,
-      });
+      // axios.post(`http://localhost:5000/salary/set-salary`, {
+      axios.post(
+        `https://mern-expense-tracker-cqy0.onrender.com/salary/set-salary`,
+        {
+          salary,
+          email,
+        }
+      );
 
       // save the user to local storage
       localStorage.setItem("user", JSON.stringify(json));

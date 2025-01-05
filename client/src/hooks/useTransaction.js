@@ -9,7 +9,8 @@ const useTransactions = () => {
     if (user) {
       axios
         .get(
-          `http://localhost:5000/transaction/get-transaction?email=${user.email}`
+          `https://mern-expense-tracker-cqy0.onrender.com/transaction/get-transaction?email=${user.email}`
+          // `http://localhost:5000/transaction/get-transaction?email=${user.email}`
         )
         .then((response) => {
           setTransactions(response.data);
@@ -24,7 +25,8 @@ const useTransactions = () => {
     if (user) {
       axios
         .post(
-          `http://localhost:5000/transaction/delete-all-transaction?email=${user.email}`
+          `https://mern-expense-tracker-cqy0.onrender.com/transaction/delete-all-transaction?email=${user.email}`
+          // `http://localhost:5000/transaction/delete-all-transaction?email=${user.email}`
         )
         .then((res) => {
           getTransaction();

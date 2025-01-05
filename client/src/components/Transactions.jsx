@@ -9,7 +9,10 @@ import axios from "axios";
 const Transactions = ({ data, getTransaction, setTotalExpenses }) => {
   const deleteTransaction = (id) => {
     axios
-      .post(`http://localhost:5000/transaction/delete-transaction?id=${id}`)
+      // .post(`http://localhost:5000/transaction/delete-transaction?id=${id}`)
+      .post(
+        `https://mern-expense-tracker-cqy0.onrender.com/transaction/delete-transaction?id=${id}`
+      )
       .then((res) => {
         getTransaction();
         console.log(res);
