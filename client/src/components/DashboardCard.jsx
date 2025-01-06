@@ -1,7 +1,20 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
 
-const DashboardCard = ({ salary, totalExpenses, totalBalance }) => {
+const DashboardCard = ({ salary, totalExpenses, totalBalance, data }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [textToCopy, setTextToCopy] = useState();
+
+  useEffect(() => {
+    if (Array.isArray(data)) {
+      const text = data
+        .map((item) => `${item.amount} on ${item.category}\n`)
+        .join(""); // Join all strings into one
+      setTextToCopy(`For this month, I spent:\n${text}`);
+    }
+  }, [data]);
+
   return (
     <Box>
       <Box
@@ -12,13 +25,38 @@ const DashboardCard = ({ salary, totalExpenses, totalBalance }) => {
           color: "white",
         }}
       >
-        <Box mb="28px">
-          <Typography fontWeight="300" fontSize="15px">
-            My Budget
-          </Typography>
-          <Typography fontSize="20px">
-            ₱ <span style={{ fontSize: "30px" }}>{salary}</span>
-          </Typography>
+        <Box mb="28px" display="flex" justifyContent="space-between">
+          <Box>
+            <Typography fontWeight="300" fontSize="15px">
+              My Budget
+            </Typography>
+            <Typography fontSize="20px">
+              ₱ <span style={{ fontSize: "30px" }}>{salary}</span>
+            </Typography>
+          </Box>
+          <Box display="flex" flexDirection="column" gap="5px">
+            <Typography fontWeight="300" fontSize="15px">
+              Expenses this month
+            </Typography>
+            <CopyToClipboard text={textToCopy}>
+              <button
+                style={{
+                  fontFamily: "Raleway",
+                  width: "130px",
+                  borderRadius: "10px",
+                  border: "none",
+                  background: isHovered ? "#5f3c6b" : "s#42224A",
+                  color: "white",
+                  padding: "10px",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                Copy
+              </button>
+            </CopyToClipboard>
+          </Box>
         </Box>
 
         <Box display="flex" justifyContent="space-between">

@@ -30,6 +30,7 @@ const Dashboard = () => {
         totalBalance={totalBalance}
         salary={salary}
         totalExpenses={totalExpenses}
+        data={transactions}
       />
       <Box mt="30px">
         <Box display="flex" justifyContent="space-between" alignItems="center">

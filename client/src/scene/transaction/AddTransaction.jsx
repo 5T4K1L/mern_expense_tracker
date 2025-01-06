@@ -137,6 +137,11 @@ const AddTransaction = () => {
               <MenuItem value="Food & Drink">Food & Drink</MenuItem>
             </Select>
           </FormControl>
+          <Typography
+            sx={{ color: "red", marginTop: "30px", marginBottom: "-20px" }}
+          >
+            The expenses last month will be deleted every third of the month.
+          </Typography>
         </Box>
         <Box display="flex" justifyContent="space-around">
           <Button
