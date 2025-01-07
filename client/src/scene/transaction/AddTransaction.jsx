@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Input,
@@ -8,82 +8,55 @@ import {
   FormControl,
   Button,
 } from "@mui/material";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import useAddTransaction from "hooks/useAddTransaction";
 import useTransactions from "hooks/useTransaction";
-
-const formatDate = () => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date().toLocaleDateString("en-US", options);
-};
 
 const AddTransaction = () => {
   const [category, setCategory] = useState("");
   const [expenseName, setExpenseName] = useState("");
   const [amount, setAmount] = useState("");
-  const { transactions, getTransaction } = useTransactions();
-  const nav = useNavigate();
+  const [thirdOfMonth, setThirdOfMonth] = useState("");
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { getTransaction } = useTransactions();
+  const { handleAddTransaction, handleAddAnother } = useAddTransaction(
+    getTransaction,
+    () => {
+      setExpenseName("");
+      setAmount("");
+      setCategory("");
+    },
+    thirdOfMonth
+  );
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
+  useEffect(() => {
+    const date = new Date();
+    const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 3);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    setThirdOfMonth(nextMonth.toLocaleDateString("en-US", options));
+  }, []);
 
-  const handleAddTransaction = (e) => {
+  const handleSubmit = (type) => (e) => {
     e.preventDefault();
 
-    // format date
-    const currentDate = formatDate();
+    const transactionData = {
+      expenseName,
+      amount,
+      category,
+      thirdOfMonth,
+    };
 
-    axios
-      .post(
-        "https://mern-expense-tracker-cqy0.onrender.com/transaction/create-transaction",
-        {
-          // .post("http://localhost:5000/transaction/create-transaction", {
-          expenseName,
-          email: user?.email,
-          amount,
-          category,
-          date: currentDate,
-        }
-      )
-      .then(nav("/dashboard"))
-      .catch((err) => console.log("error"));
-  };
-
-  const handleAddAnother = (e) => {
-    e.preventDefault();
-
-    const currentDate = formatDate();
-    axios
-      .post(
-        "https://mern-expense-tracker-cqy0.onrender.com/transaction/create-transaction",
-        {
-          // .post("http://localhost:5000/transaction/create-transaction", {
-          expenseName,
-          email: user?.email,
-          amount,
-          category,
-          date: currentDate,
-        }
-      )
-      .then(() => {
-        getTransaction();
-        setExpenseName("");
-        setAmount("");
-        setCategory("");
-      })
-      .catch((err) => console.log(err));
+    if (type === "add") {
+      handleAddTransaction(transactionData);
+    } else if (type === "addAnother") {
+      handleAddAnother(transactionData);
+    }
   };
 
   return (
     <Box m="37px 22px">
       <Typography fontWeight="400" variant="h2">
         Add{" "}
-        <span style={{ color: "#42224A", fontWeight: "bold" }}>
-          Transaction
-        </span>
+        <span style={{ color: "#42224A", fontWeight: "bold" }}>Expense</span>
       </Typography>
       <Box mt="64px">
         <Box mb="49px">
@@ -127,7 +100,7 @@ const AddTransaction = () => {
           <FormControl fullWidth>
             <Select
               value={category}
-              onChange={handleCategoryChange}
+              onChange={(e) => setCategory(e.target.value)}
               label="Category"
               sx={{ fontSize: "20px", marginTop: "10px" }}
             >
@@ -140,12 +113,13 @@ const AddTransaction = () => {
           <Typography
             sx={{ color: "red", marginTop: "30px", marginBottom: "-20px" }}
           >
-            The expenses last month will be deleted every third of the month.
+            The expenses last month will be deleted every third of the upcoming
+            month.
           </Typography>
         </Box>
         <Box display="flex" justifyContent="space-around">
           <Button
-            onClick={handleAddTransaction}
+            onClick={handleSubmit("add")}
             sx={{
               backgroundColor: "#42224a",
               width: "156px",
@@ -159,7 +133,7 @@ const AddTransaction = () => {
             Add
           </Button>
           <Button
-            onClick={handleAddAnother}
+            onClick={handleSubmit("addAnother")}
             sx={{
               backgroundColor: "#42224a",
               width: "156px",

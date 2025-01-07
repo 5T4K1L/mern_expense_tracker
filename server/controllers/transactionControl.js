@@ -1,3 +1,4 @@
+import ArchivedExpenses from "../models/ArchivedExpenses.js";
 import TransactionModel from "../models/TransactionModel.js";
 
 // create
@@ -43,5 +44,22 @@ export const deleteAllTransaction = (req, res) => {
   const { email } = req.query;
   TransactionModel.deleteMany({ email })
     .then((response) => res.status(200).json(response))
+    .catch((error) => res.status(500).json({ error: error.message }));
+};
+
+// delete all every transaction of third of the month
+export const deleteThirdTransaction = (req, res) => {
+  const { email } = req.query;
+  const { thirdOfMonth } = req.query;
+  const { expenseName } = req.query;
+  const { date } = req.query;
+  const { category } = req.query;
+  const { amount } = req.query;
+  ArchivedExpenses.create({ expenseName, email, date, category, amount })
+    .then((response) => {
+      return TransactionModel.deleteMany({ email, thirdOfMonth }).then(() =>
+        res.status(200).json(response)
+      );
+    })
     .catch((error) => res.status(500).json({ error: error.message }));
 };

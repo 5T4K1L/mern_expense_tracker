@@ -5,6 +5,8 @@ import {
   deleteTransaction,
   readTransaction,
   updateTransaction,
+  deleteThirdTransaction,
+  // transferExpenses,
 } from "../controllers/transactionControl.js";
 
 const router = express.Router();
@@ -23,5 +25,11 @@ router.post("/delete-transaction", deleteTransaction);
 
 // delete all
 router.post("/delete-all-transaction", deleteAllTransaction);
+
+// delete transaction of third of the month
+router.post("/delete-if-third", deleteThirdTransaction);
+
+// transfer
+// router.post("/transfer-expenses", transferExpenses);
 
 export default router;

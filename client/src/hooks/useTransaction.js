@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 const useTransactions = () => {
   const [transactions, setTransactions] = useState([]);
@@ -38,7 +38,34 @@ const useTransactions = () => {
     }
   };
 
-  return { transactions, getTransaction, deleteAllTransaction };
+  const deleteThird = () => {
+    const formatDate = () => {
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return new Date().toLocaleDateString("en-US", options);
+    };
+
+    const currentDate = formatDate();
+
+    transactions.forEach((transaction) => {
+      if (currentDate === transaction.thirdOfMonth) {
+        console.log(transactions.length);
+        axios
+          .post(
+            `https://mern-expense-tracker-cqy0.onrender.com/transaction/delete-if-third?email=${user.email}&thirdOfMonth=${transaction.thirdOfMonth}&expenseName=${transaction.expenseName}&date=${transaction.date}&category=${transaction.category}&amount=${transaction.amount}`
+            // `http://localhost:5000/transaction/delete-if-third?email=${user.email}&thirdOfMonth=${transaction.thirdOfMonth}&expenseName=${transaction.expenseName}&date=${transaction.date}&category=${transaction.category}&amount=${transaction.amount}`
+          )
+          .then((res) => {
+            getTransaction();
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
+
+  return { transactions, getTransaction, deleteAllTransaction, deleteThird };
 };
 
 export default useTransactions;

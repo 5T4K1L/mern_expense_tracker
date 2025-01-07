@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const TransactionSchema = new mongoose.Schema({
+const ArchivedScheme = new mongoose.Schema({
   expenseName: {
     type: String,
     required: true,
@@ -10,8 +10,7 @@ const TransactionSchema = new mongoose.Schema({
   amount: String,
   category: String,
   date: String,
-  thirdOfMonth: String,
 });
 
-const Transaction = mongoose.model("Transaction", TransactionSchema);
-export default Transaction;
+const ArchivedExpenses = mongoose.model("Archive", ArchivedScheme);
+export default ArchivedExpenses;

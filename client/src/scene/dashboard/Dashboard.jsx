@@ -6,7 +6,7 @@ import useTransactions from "hooks/useTransaction";
 import React, { useEffect, useState } from "react";
 
 const Dashboard = () => {
-  const { transactions, getTransaction, deleteAllTransaction } =
+  const { transactions, getTransaction, deleteAllTransaction, deleteThird } =
     useTransactions();
   const { salary, getSalary } = useSalary();
   const [totalExpenses, setTotalExpenses] = useState(0);
@@ -21,7 +21,11 @@ const Dashboard = () => {
   useEffect(() => {
     getSalary();
     getTransaction();
-  }, [getTransaction]);
+  }, []);
+
+  useEffect(() => {
+    deleteThird();
+  }, [transactions]);
 
   return (
     <Box sx={{ minHeight: "100vh", width: "100%", paddingBottom: "50px" }}>
