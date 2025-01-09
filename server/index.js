@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import usersRoute from "./routes/usersRoute.js";
 import transactionRoute from "./routes/transactionRoute.js";
 import userSalary from "./routes/userSalary.js";
+import archivesRoute from "./routes/archivesRoute.js";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -18,6 +19,7 @@ app.use(cors());
 app.use("/user", usersRoute);
 app.use("/transaction", transactionRoute);
 app.use("/salary", userSalary);
+app.use("/archives", archivesRoute);
 
 // MONGOOSE SETUP
 

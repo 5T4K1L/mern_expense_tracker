@@ -3,6 +3,7 @@ import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import CategoryRoundedIcon from "@mui/icons-material/CategoryRounded";
 import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import ArchiveIcon from "@mui/icons-material/Archive";
 import LogoutIcon from "@mui/icons-material/Logout";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -31,6 +32,13 @@ const NavigationMenu = () => {
     >
       <Link to="/dashboard" style={{ color: "#42224A" }}>
         <DashboardRoundedIcon
+          sx={{
+            fontSize: "30px",
+          }}
+        />
+      </Link>
+      <Link to="/archives" style={{ color: "#42224A" }}>
+        <ArchiveIcon
           sx={{
             fontSize: "30px",
           }}

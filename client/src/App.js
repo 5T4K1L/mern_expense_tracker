@@ -23,6 +23,7 @@ import BankTransfer from "components/categories/BankTransfer.jsx";
 import MoneyReceived from "components/categories/MoneyReceived.jsx";
 import AddTransaction from "scene/transaction/AddTransaction.jsx";
 import { useAuthContext } from "hooks/useAuthContext.js";
+import Archives from "scene/archives/Archives.jsx";
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings("light")), []);
@@ -39,6 +40,10 @@ function App() {
               element={user ? <AddTransaction /> : <Navigate to="/login" />}
             />
             <Route element={user ? <Navigation /> : <Navigate to="/login" />}>
+              <Route
+                path="/archives"
+                element={user ? <Archives /> : <Navigate to="/archives" />}
+              />
               <Route
                 path="/dashboard"
                 element={user ? <Dashboard /> : <Navigate to="/login" />}
