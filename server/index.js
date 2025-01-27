@@ -3,6 +3,8 @@ import usersRoute from "./routes/usersRoute.js";
 import transactionRoute from "./routes/transactionRoute.js";
 import userSalary from "./routes/userSalary.js";
 import archivesRoute from "./routes/archivesRoute.js";
+import encryptionRoute from "./routes/encryptionRoute.js";
+import chartRoute from "./routes/chartRoute.js";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -20,6 +22,8 @@ app.use("/user", usersRoute);
 app.use("/transaction", transactionRoute);
 app.use("/salary", userSalary);
 app.use("/archives", archivesRoute);
+app.use("/encryption", encryptionRoute);
+app.use("/chart", chartRoute);
 
 // MONGOOSE SETUP
 
